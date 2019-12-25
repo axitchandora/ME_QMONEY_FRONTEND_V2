@@ -1,5 +1,7 @@
 package com.crio.stock.annualreturnapp;
 
+import com.crio.warmup.stock.quotes.StockQuoteServiceFactory;
+import com.crio.warmup.stock.quotes.StockQuotesService;
 import com.crio.warmup.stock.service.PortfolioManagerService;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -19,7 +21,8 @@ public class AnnualReturnsController {
 
   @Autowired
   public AnnualReturnsController(RestTemplate restTemplate) {
-    portfolioManagerService = new PortfolioManagerService(restTemplate);
+    StockQuotesService stockQuotesService = new StockQuoteServiceFactory().getService(null, restTemplate);
+    portfolioManagerService = new PortfolioManagerService(stockQuotesService);
   }
 
   @PostMapping("/analyze")
