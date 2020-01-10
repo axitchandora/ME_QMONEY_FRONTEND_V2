@@ -40,9 +40,9 @@ public class AnnualReturnsController {
           .calculationsDate(endDate)
           .name(portfolio.getName())
           .build();
-    } catch (StockQuoteServiceException e) {
+    } catch (Throwable e) {
       e.printStackTrace();
-      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Provider error", e);
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unknown error", e);
     }
   }
 }
