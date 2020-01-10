@@ -36,7 +36,7 @@ public class AnnualReturnsController {
     try {
       return PortfolioResponse.builder()
           .annualizedReturns(portfolioManager
-              .calculateAnnualizedReturn(portfolio.getPortfolioTrades(), endDate))
+              .calculateAnnualizedReturnParallel(portfolio.getPortfolioTrades(), endDate, 6))
           .calculationsDate(endDate)
           .name(portfolio.getName())
           .build();
