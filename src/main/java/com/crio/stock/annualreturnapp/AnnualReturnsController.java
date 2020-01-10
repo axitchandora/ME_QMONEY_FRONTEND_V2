@@ -1,6 +1,5 @@
 package com.crio.stock.annualreturnapp;
 
-import com.crio.warmup.stock.exception.StockQuoteServiceException;
 import com.crio.warmup.stock.portfolio.PortfolioManager;
 import com.crio.warmup.stock.portfolio.PortfolioManagerFactory;
 import java.time.LocalDate;
@@ -31,7 +30,7 @@ public class AnnualReturnsController {
   @ResponseBody
   public PortfolioResponse calculateReturns(@RequestBody Portfolio portfolio)
       throws InterruptedException {
-    PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager("tiingo", restTemplate);
+    PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager(restTemplate);
     LocalDate endDate = LocalDate.now().minus(1, ChronoUnit.DAYS);
     try {
       return PortfolioResponse.builder()
@@ -40,7 +39,7 @@ public class AnnualReturnsController {
           .calculationsDate(endDate)
           .name(portfolio.getName())
           .build();
-    } catch (StockQuoteServiceException e) {
+    } catch (Throwable e) {
       e.printStackTrace();
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Provider error", e);
     }
