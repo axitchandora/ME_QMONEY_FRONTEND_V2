@@ -1,0 +1,39 @@
+[
+  {
+    "symbol": "AAPL",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "MSFT",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "GOOGL",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "CSCO",
+    "quantity": 100,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "CTS",
+    "quantity": 10,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  },
+  {
+    "symbol": "AAA",
+    "quantity": 50,
+    "tradeType": "BUY",
+    "purchaseDate": "2019-01-02"
+  }
+
+]

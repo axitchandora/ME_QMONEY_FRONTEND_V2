@@ -1,9 +1,8 @@
 package com.crio.stock.annualreturnapp;
 
-import com.crio.warmup.stock.exception.RateLimitException;
-import com.crio.warmup.stock.quotes.StockQuoteServiceFactory;
-import com.crio.warmup.stock.quotes.StockQuotesService;
-import com.crio.warmup.stock.service.PortfolioManagerService;
+import com.crio.warmup.stock.exception.StockQuoteServiceException;
+import com.crio.warmup.stock.portfolio.PortfolioManager;
+import com.crio.warmup.stock.portfolio.PortfolioManagerFactory;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +19,29 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/portfolio")
 public class AnnualReturnsController {
 
-  private PortfolioManagerService portfolioManagerService;
+  private RestTemplate restTemplate;
   private int numThreads = 10;
 
   @Autowired
   public AnnualReturnsController(RestTemplate restTemplate) {
-    StockQuotesService stockQuotesService = new StockQuoteServiceFactory()
-        .getService(null, restTemplate);
-    portfolioManagerService = new PortfolioManagerService(stockQuotesService);
+    this.restTemplate = restTemplate;
   }
 
   @PostMapping("/analyze")
   @ResponseBody
   public PortfolioResponse calculateReturns(@RequestBody Portfolio portfolio)
       throws InterruptedException {
+    PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager("tiingo", restTemplate);
     LocalDate endDate = LocalDate.now().minus(1, ChronoUnit.DAYS);
     try {
       return PortfolioResponse.builder()
-          .annualizedReturns(portfolioManagerService
-              .calculateAnnualizedReturnParallel(portfolio.getPortfolioTrades(), endDate,
-                  numThreads))
+          .annualizedReturns(portfolioManager
+              .calculateAnnualizedReturn(portfolio.getPortfolioTrades(), endDate))
           .calculationsDate(endDate)
           .name(portfolio.getName())
           .build();
-    } catch (RateLimitException e) {
+    } catch (StockQuoteServiceException e) {
+      e.printStackTrace();
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Provider error", e);
     }
   }
