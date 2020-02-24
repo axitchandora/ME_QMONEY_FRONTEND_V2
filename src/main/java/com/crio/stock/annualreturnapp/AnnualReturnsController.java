@@ -1,6 +1,5 @@
 package com.crio.stock.annualreturnapp;
 
-import com.crio.warmup.stock.exception.StockQuoteServiceException;
 import com.crio.warmup.stock.portfolio.PortfolioManager;
 import com.crio.warmup.stock.portfolio.PortfolioManagerFactory;
 import java.time.LocalDate;
