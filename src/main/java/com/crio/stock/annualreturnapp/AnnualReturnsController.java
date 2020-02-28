@@ -33,7 +33,7 @@ public class AnnualReturnsController {
   @ResponseBody
   public PortfolioResponse calculateReturns(@RequestBody Portfolio portfolio)
       throws InterruptedException {
-    PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager("", restTemplate);
+    PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager(null, restTemplate);
     LocalDate endDate = LocalDate.now().minus(1, ChronoUnit.DAYS);
     try {
       return PortfolioResponse.builder()
