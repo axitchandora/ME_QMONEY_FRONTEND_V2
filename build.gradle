@@ -26,7 +26,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
-    compile 'com.crio.warmup:annual-return:1.0.0'
+    //compile 'com.crio.warmup:annual-return:1.0.0'
+    compile fileTree(dir: 'src/main/resources', include: '*.jar')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
